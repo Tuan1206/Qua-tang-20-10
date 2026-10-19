@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3eaff">
+  <title>Một điều bí mật dành cho Lương 💜</title>
+  <style>
+    :root {
+      --lavender: #d9c2ff;
+      --deep: #7650a8;
+      --ink: #49365e;
+      --cream: #fffaff;
+      --pink: #f5c8e8;
+    }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      margin: 0; min-height: 100vh; overflow-x: hidden;
+      font-family: "Trebuchet MS", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255,255,255,.95), transparent 28%),
+        radial-gradient(circle at 85% 25%, rgba(237,215,255,.9), transparent 30%),
+        linear-gradient(145deg, #f9f0ff 0%, #eadcff 48%, #fff0fa 100%);
+      display: grid; place-items: center; padding: 24px 14px;
+    }
+    .glow {
+      position: fixed; width: 220px; height: 220px; border-radius: 50%;
+      filter: blur(55px); opacity: .45; pointer-events: none; z-index: 0;
+      animation: drift 9s ease-in-out infinite alternate;
+    }
+    .g1 { background: #d7b4ff; top: -50px; left: -70px; }
+    .g2 { background: #ffcaeb; right: -80px; bottom: -40px; animation-delay: -4s; }
+    @keyframes drift { to { transform: translate(25px, 30px) scale(1.12); } }
+    .sparkles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+    .sparkle { position: absolute; color: #a47bca; opacity: .5; animation: twinkle 3s infinite ease-in-out; }
+    @keyframes twinkle { 0%,100% { opacity: .2; transform: scale(.8) rotate(0); } 50% { opacity: .85; transform: scale(1.2) rotate(20deg); } }
+    .card {
+      position: relative; z-index: 1; width: min(100%, 440px); padding: 28px 22px 24px;
+      text-align: center; border: 1px solid rgba(255,255,255,.85);
+      border-radius: 30px; background: rgba(255,250,255,.78);
+      box-shadow: 0 22px 70px rgba(103,69,145,.18), inset 0 1px 0 white;
+      backdrop-filter: blur(12px);
+    }
+    .eyebrow { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: #9878b9; font-weight: 800; }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 9vw, 2.7rem); line-height: 1.1; margin: 12px 0 10px; color: #6b4698; }
+    .intro { margin: 0 auto 20px; max-width: 300px; line-height: 1.65; font-size: .98rem; color: #735f87; }
+    .envelope-wrap { margin: 20px auto 18px; width: 210px; height: 160px; position: relative; perspective: 900px; }
+    .envelope {
+      position: absolute; left: 0; bottom: 0; width: 100%; height: 125px;
+      background: linear-gradient(135deg, #c9a9ef, #ad88dc);
+      border-radius: 8px 8px 16px 16px; box-shadow: 0 15px 24px rgba(109,72,151,.2);
+    }
+    .envelope:before, .envelope:after { content: ""; position: absolute; bottom: 0; width: 0; height: 0; border-style: solid; }
+    .envelope:before { left: 0; border-width: 0 0 92px 105px; border-color: transparent transparent #b997e3 transparent; }
+    .envelope:after { right: 0; border-width: 92px 0 0 105px; border-color: transparent transparent transparent #d3b8f0; }
+    .flap {
+      position: absolute; z-index: 4; top: 35px; left: 0; width: 0; height: 0;
+      border-left: 105px solid transparent; border-right: 105px solid transparent;
+      border-top: 78px solid #e0cafa; transform-origin: top; transition: transform .8s ease; filter: drop-shadow(0 3px 2px rgba(93,59,133,.08));
+    }
+    .letter {
+      position: absolute; z-index: 2; left: 13px; bottom: 10px; width: 184px; height: 105px;
+      background: #fffaff; border-radius: 9px; display: grid; place-items: center;
+      color: #a07ac7; font-size: 2rem; transition: transform .8s ease, bottom .8s ease;
+      box-shadow: 0 2px 8px rgba(92,62,125,.12);
+    }
+    .seal { position: absolute; z-index: 5; left: 50%; top: 87px; transform: translateX(-50%); width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: #f9e0f1; box-shadow: 0 3px 8px #9b71b555; font-size: 1.1rem; transition: opacity .3s; }
+    .opened .flap { transform: rotateX(180deg); z-index: 1; }
+    .opened .letter { bottom: 62px; transform: translateY(-12px); }
+    .opened .seal { opacity: 0; }
+    .btn {
+      appearance: none; border: 0; border-radius: 999px; padding: 14px 23px; min-height: 48px;
+      background: linear-gradient(100deg, #8f65bf, #b58be0); color: white; font-weight: 800;
+      font-size: .98rem; cursor: pointer; box-shadow: 0 8px 20px #9c77c955;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px #9c77c966; }
+    .btn:active { transform: scale(.98); }
+    .letter-content {
+      display: none; text-align: left; margin-top: 23px; padding: 22px 19px;
+      border-radius: 20px; background: linear-gradient(160deg, #fff, #fcf5ff);
+      border: 1px solid #efe1fb; box-shadow: inset 0 1px 0 #fff;
+      animation: appear .8s ease both;
+    }
+    .letter-content.show { display: block; }
+    @keyframes appear { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .letter-content h2 { font-family: Georgia, serif; color: #7b55a4; text-align: center; font-size: 1.65rem; margin: 0 0 16px; }
+    .letter-content p { line-height: 1.8; font-size: .98rem; margin: 0 0 13px; }
+    .signature { text-align: right; color: #916db4; font-weight: 800; margin-top: 18px !important; }
+    .tiny { margin-top: 20px; color: #9a86ac; font-size: .78rem; }
+    .floating { position: fixed; z-index: 5; pointer-events: none; animation: floatUp 3.2s ease-out forwards; }
+    @keyframes floatUp { from { opacity: 0; transform: translateY(0) scale(.6) rotate(0); } 15% { opacity: .9; } to { opacity: 0; transform: translateY(-85vh) scale(1.35) rotate(35deg); } }
+    .hidden { display: none !important; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="sparkles" aria-hidden="true">
+    <span class="sparkle" style="left:12%;top:17%;font-size:20px">✦</span>
+    <span class="sparkle" style="left:84%;top:13%;font-size:16px;animation-delay:1s">✧</span>
+    <span class="sparkle" style="left:9%;top:72%;font-size:22px;animation-delay:.6s">✧</span>
+    <span class="sparkle" style="left:88%;top:76%;font-size:20px;animation-delay:1.4s">✦</span>
+    <span class="sparkle" style="left:50%;top:6%;font-size:14px;animation-delay:2s">✧</span>
+  </div>
+
+  <main class="card">
+    <div class="eyebrow">A little secret · 20/10</div>
+    <h1>Dành riêng cho<br>Lương 💜</h1>
+    <p class="intro">Có một điều nho nhỏ mình muốn gửi cậu…<br>Nhấn vào chiếc phong thư nhé.</p>
+
+    <div class="envelope-wrap" id="envelopeWrap" aria-label="Phong thư màu tím">
+      <div class="envelope"></div>
+      <div class="letter">💌</div>
+      <div class="flap"></div>
+      <div class="seal">♥</div>
+    </div>
+
+    <button class="btn" id="openBtn" type="button">Mở bí mật ✨</button>
+
+    <section class="letter-content" id="letterContent" aria-live="polite">
+      <h2>Gửi Lương 🌷</h2>
+      <p>Chúc Lương có một ngày 20/10 thật vui vẻ, luôn gặp những điều dịu dàng và có thật nhiều lý do để mỉm cười nhé.</p>
+      <p>Mình không giỏi nói những lời hoa mỹ, chỉ muốn nói rằng: Lương là một người rất đặc biệt đối với mình. Mỗi lần được nói chuyện với cậu, ngày bình thường cũng có thể trở nên vui hơn một chút.</p>
+      <p>Mong rằng cậu sẽ luôn tự tin, hạnh phúc và được yêu thương thật nhiều. Và nếu cậu chưa biết, thì có một người đang âm thầm dành cho cậu một sự quan tâm rất đặc biệt đó. 💜</p>
+      <p class="signature">— H_A_T ✨</p>
+    </section>
+
+    <p class="tiny" id="tinyText">Một món quà nhỏ, gửi bằng cả sự chân thành.</p>
+  </main>
+
+  <script>
+    const openBtn = document.getElementById('openBtn');
+    const envelopeWrap = document.getElementById('envelopeWrap');
+    const letterContent = document.getElementById('letterContent');
+    const tinyText = document.getElementById('tinyText');
+    let opened = false;
+
+    function makeHearts(count = 22) {
+      const symbols = ['💜', '♡', '✦', '🌸', '✨'];
+      for (let i = 0; i < count; i++) {
+        const item = document.createElement('span');
+        item.className = 'floating';
+        item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        item.style.left = (4 + Math.random() * 92) + 'vw';
+        item.style.top = (58 + Math.random() * 35) + 'vh';
+        item.style.fontSize = (15 + Math.random() * 19) + 'px';
+        item.style.animationDelay = (Math.random() * 0.8) + 's';
+        document.body.appendChild(item);
+        setTimeout(() => item.remove(), 4200);
+      }
+    }
+
+    openBtn.addEventListener('click', () => {
+      if (!opened) {
+        opened = true;
+        envelopeWrap.classList.add('opened');
+        letterContent.classList.add('show');
+        openBtn.textContent = 'Đọc lại lời nhắn 💜';
+        tinyText.textContent = 'Hy vọng món quà nhỏ này làm cậu mỉm cười.';
+        makeHearts();
+      } else {
+        letterContent.classList.remove('show');
+        void letterContent.offsetWidth;
+        letterContent.classList.add('show');
+        makeHearts(10);
+      }
+    });
+  </script>
+</body>
+</html>
